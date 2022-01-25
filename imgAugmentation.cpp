@@ -1,5 +1,5 @@
 
-// g++ -ggdb `pkg-config --cflags imgRotation.cpp` -o img `imgRotation.cpp` `pkg-config --libs opencv`
+// g++ imgRotation.cpp` -o img `pkg-config --libs opencv` ggdb `pkg-config --cflags  `imgRotation.cpp`
 #include <opencv2/opencv.hpp>
 #include "opencv2/imgproc.hpp"
 #include "opencv2/highgui.hpp"
@@ -24,19 +24,17 @@ class ImgAugmentation{
 
     }
     void shear(const cv::Mat & input, float Bx, float By){
+        //https://stackoverflow.com/questions/46998895/image-shearing-c
         if (Bx*By == 1)
         {
+            std::cout<<"Shearing: Bx*By==1 is forbidden"<<std::endl;
             throw("Shearing: Bx*By==1 is forbidden");
         }
 
-        if (input.type() != CV_8UC3) {
+        if (input.type() == CV_8UC3 || input.type() ==CV_8UC2) {
+            std::cout<<"not valid type"<<":" <<input.type()<<" "<< "valid type:"<< CV_8UC1 <<std::endl;
             throw("not valid type");
         }
-
-        // shearing:
-        // x'=x+y·Bx
-        // y'=y+x*By
-
         // shear the extreme positions to find out new image size:
         std::vector<cv::Point2f> extremePoints; //vector<(0,1)>
         extremePoints.push_back(cv::Point2f(0, 0));
@@ -50,31 +48,22 @@ class ImgAugmentation{
             pt = cv::Point2f(pt.x + pt.y*Bx, pt.y + pt.x*By);
         }
 
-        cv::Rect offsets = cv::boundingRect(extremePoints);
+        cv::Rect offsets = cv::boundingRect(extremePoints); //[900 x 283 from (0, 0)]
 
-        cv::Point2f offset = -offsets.tl();
-        cv::Size resultSize = offsets.size();
+        cv::Point2f offset = -offsets.tl(); //[0, 0]
+        cv::Size resultSize = offsets.size();//[900 x 283]
 
         this->img = cv::Mat::zeros(resultSize, input.type()); // every pixel here is implicitely shifted by "offset"
 
         // perform the shearing by back-transformation
         for (int j = 0; j < img.rows; ++j)
         {
-
             for (int i = 0; i < img.cols; ++i)
             {
                 cv::Point2f pp(i, j);
-
                 pp = pp - offset; // go back to original coordinate system
 
                 // go back to original pixel:
-                // x'=x+y·Bx
-                // y'=y+x*By
-                //   y = y'-x*By
-                //     x = x' -(y'-x*By)*Bx
-                //     x = +x*By*Bx - y'*Bx +x'
-                //     x*(1-By*Bx) = -y'*Bx +x'
-                //     x = (-y'*Bx +x')/(1-By*Bx)
 
                 cv::Point2f p;
                 p.x = (-pp.y*Bx + pp.x) / (1 - By*Bx);
@@ -83,17 +72,42 @@ class ImgAugmentation{
                 if ((p.x >= 0 && p.x < input.cols) && (p.y >= 0 && p.y < input.rows))
                 {
                     // TODO: interpolate, if wanted (p is floating point precision and can be placed between two pixels)!
-                    img.at<cv::Vec3b>(j, i) = input.at<cv::Vec3b>(p);
+                    //img.at<cv::Vec3b>(j, i) = input.at<cv::Vec3b>(p);
+                    img.at<uchar>(j,i) = input.at<uchar>(p);
+                    std::cout<<img.at<uchar>(j, i)<<std::endl;
                 }
             }
         }
+    }
+    void cropping(cv::Mat image, const int cropSize){
 
-}
+        const int offsetW = (image.cols - cropSize) / 2;
+        const int offsetH = (image.rows - cropSize) / 2;
+        const cv::Rect roi(offsetW, offsetH, cropSize, cropSize);
+        this->img= image(roi).clone();
+        std::cout << "Cropped image dimension: " << image.cols << " X " << image.rows << std::endl;
+
+    }
+    void changing_contrast_brightness(cv::Mat image, double alpha, int beta){
+
+    this->img = cv::Mat::zeros( image.size(), image.type() );
+        for(int y =0; y<image.rows; y++){
+            for(int x =0;x<image.cols;x++ ){
+                img.at<uchar>(y,x) = cv::saturate_cast<uchar>(alpha*image.at<uchar>(y,x) + beta);
+                //for(int c=0; c<image.channels(); c++){
+                    //std::cout<< cv::saturate_cast<uchar>( alpha*image.at<uchar>(y,x) + beta )<<std::endl;
+                    //img.at<cv::Vec3b>(y,x)[c]=cv::saturate_cast<uchar>( alpha*image.at<cv::Vec3b>(y,x)[c] + beta);
+                //}
+            }
+        }
+    }
     public:
     ImgAugmentation(cv::Mat scr, double angle, char direction, float bx, float by ){
         //rotation(scr, angle);
         //flipping(scr, direction);
-        shear(scr, bx,by);
+        //shear(scr, bx,by);
+       //cropping(scr, 128);
+       //changing_contrast_brightness(scr, 2.0, 2);
     }
     cv::Mat get_rotated_img(){
         return img;
@@ -102,13 +116,14 @@ class ImgAugmentation{
 
 
 int main(){
-    cv::Mat scr=cv::imread("./spatial_transformer.png");
+    cv::Mat scr=cv::imread("./spatial_transformer.png", cv::IMREAD_GRAYSCALE);
     if( !scr.data )
     {
         std::cout<<"Error loadind src n"<<std::endl;
         return -1;
     }
-    ImgAugmentation img(scr,30, 2, 0.7, 0);
+    std::cout<<scr.type() <<" "<<CV_8UC1<<std::endl;
+    ImgAugmentation img(scr,30.0, 2, 0.7, 0);
     cv::imshow("source:", scr);
     cv::imshow("rotated:", img.get_rotated_img());
     cv::waitKey(0);
