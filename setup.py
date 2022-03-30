@@ -6,28 +6,37 @@ import numpy
 import sys
 import os
 import glob
+#import pkgconfig
 
-lib_folder = os.path.join(sys.prefix+"/local/", 'lib')
-
+#var = pkgconfig.variables("opencv")
+lib_folder = os.path.join("/usr", 'lib', "x86_64-linux-gnu")
+#lib_folder = list(var.values()) #os.path.join(sys.prefix, "lib")
 # Find opencv libraries in lib_folder
+
 cvlibs = list()
 for file in glob.glob(os.path.join(lib_folder, 'libopencv_*')):
     cvlibs.append(file.split('.')[0])
-cvlibs = list(set(cvlibs))
-cvlibs = ['-L{}'.format(lib_folder)] + \
-         ['opencv_{}'.format(lib.split(os.path.sep)[-1].split('libopencv_')[-1]) for lib in cvlibs]
-print("LIBS",cvlibs)
+
+#cvlibs = pkgconfig.libs("opencv") #
+#cvlibs = list(set(cvlibs))
+print( cvlibs)
+cvlibs = ['-L{}'.format(lib_folder)] + ['opencv_{}'.format(lib.split(os.path.sep)[-1].split('libopencv_')[-1]) for lib in cvlibs]
+
+
+print("LIBS",cvlibs, os.path.join("usr" ,"include", "opencv2"))
 print("FOLDER:", lib_folder, sys.prefix)
 setup(
     cmdclass={'build_ext': build_ext},
-    ext_modules=cythonize(Extension("opencv_mat",
-                                    sources=["opencv_mat.pyx"],
+    ext_modules=cythonize(Extension("augmentation_manager",
+                                    sources=["PyImageAugmentation.pyx", "ImageAugmentation.cpp"],
                                     language="c++",
                                     include_dirs=[numpy.get_include(),
-                                                  os.path.join(sys.prefix, 'include', 'opencv2'),
+                                                  os.path.join("/usr", 'include', 'opencv'),
                                                  ],
                                     library_dirs=[lib_folder],
                                     libraries=cvlibs,
                                     )
                           )
 )
+
+#ldconfig -p | grep opencv
