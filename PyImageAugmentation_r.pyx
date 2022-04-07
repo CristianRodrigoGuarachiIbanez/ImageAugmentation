@@ -12,35 +12,33 @@ from libc.stdlib cimport rand, RAND_MAX
 ctypedef unsigned char uchar
 import_array()
 
-cdef class PyImageDataGenerator:
+cdef class PyImageDataGeneratorR:
     cdef:
-         uchar[:,:,:,:,:] final_images
+         uchar[:,:,:,:] final_images
          vector[Mat] augmentedImages
          int reserve_1, reserve_2, reserve_3
-    def __cinit__(self, uchar[:,:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):
+    def __cinit__(self, uchar[:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):
         self.reserve_1 = image.shape[0]
         self.reserve_2 = image.shape[1]
-        self.reserve_3 = image.shape[2]
         self.final_images = image[:]
         self.display(self.final_images, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
     @boundscheck(True)
     @wraparound(True)
     @cdivision(True)
-    cdef void display(self, uchar[:,:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):
+    cdef void display(self, uchar[:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):
         cdef:
-            int i, j, k
+            int i, j,
             Mat img
             vector[int] limits
             AugmentationManager * augmented
         for i in range(self.reserve_1):
             random_number = self.random_number(9)
             for j in range(self.reserve_2):
-                for k in range(self.reserve_3):
-                    img = self.np2Mat2D(image[i,j,k])
-                    assert(img.rows ==image.shape[3] and img.cols==image.shape[4]), "the image dimensions are not identical to the dimensions of the original array"
-                    augmented = new AugmentationManager(img, random_number, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
-                    self.augmentedImages.push_back(augmented.getAugmentedImage())
-                    del augmented
+                img = self.np2Mat2D(image[i,j])
+                assert(img.rows ==120 and img.cols==160), "the image dimensions are not identical to the dimensions of the original array"
+                augmented = new AugmentationManager(img, random_number, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
+                self.augmentedImages.push_back(augmented.getAugmentedImage())
+                del augmented
         if(self.augmentedImages.size()>0):
             self.PyAugmentedImage(self.augmentedImages, image)
             self.augmentedImages.clear()
@@ -96,9 +94,9 @@ cdef class PyImageDataGenerator:
     @boundscheck(True)
     @wraparound(True)
     @cdivision(True)
-    cdef inline void PyAugmentedImage(self, vector[Mat]images, uchar[:,:,:,:,:]&original):
+    cdef inline void PyAugmentedImage(self, vector[Mat]images, uchar[:,:,:,:]&original):
         cdef:
-            int i, j, k, m, n
+            int i, j, m, n
             unsigned int  total, counter=0
             Mat img
             uchar[:,:] img_array = zeros((120,160), dtype=uint8)
@@ -106,22 +104,21 @@ cdef class PyImageDataGenerator:
         assert(images.size()== total), "the size of the vectors is not igual to dimensions of original array"
         for i in range(self.reserve_1):
             for j in range(self.reserve_2):
-                for k in range(self.reserve_3):
-                    img = images[counter]
-                    if(img.rows==120 and img.cols==160):
-                        self.Mat2np(img, img_array)
-                        #print("image ->", asarray(img_array).shape, counter)
-                        if(counter<total):
-                           counter+=1
-                        else:
-                            print("[Info]: Counter out of boundaries -> {} != {}".format(counter, total))
-                            raise AssertionError()
-                        for m in range(img.rows):
-                            for n in range(img.cols):
-                                original[i,j,k,m,n] = img_array[m,n]
+                img = images[counter]
+                if(img.rows==120 and img.cols==160):
+                    self.Mat2np(img, img_array)
+                    #print("image ->", asarray(img_array).shape, counter)
+                    if(counter<total):
+                       counter+=1
                     else:
-                        print("[Info]: false number of rows {} and columns {}".format(img.rows, img.cols))
+                        print("[Info]: Counter out of boundaries -> {} != {}".format(counter, total))
                         raise AssertionError()
+                    for m in range(img.rows):
+                        for n in range(img.cols):
+                            original[i,j,m,n] = img_array[m,n]
+                else:
+                    print("[Info]: false number of rows {} and columns {}".format(img.rows, img.cols))
+                    raise AssertionError()
     @boundscheck(True)
     @wraparound(True)
     @cdivision(True)
