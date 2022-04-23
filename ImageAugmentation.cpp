@@ -1,5 +1,5 @@
 //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g
-// g++ imAugmentation.cpp` -o img `pkg-config --libs opencv` ggdb `pkg-config --cflags  `imgRotation.cpp`
+// g++ imAugmentation.cpp -o img `pkg-config --libs opencv` ggdb `pkg-config --cflags  `imgRotation.cpp`
 #include "ImageAugmentation.h"
 namespace img{
 
@@ -44,7 +44,6 @@ namespace img{
         cv::Size resultSize = offsets.size();//[900 x 283]
 
         this->IMG = cv::Mat::zeros(resultSize, input.type()); // every pixel here is implicitely shifted by "offset"
-
         // perform the shearing by back-transformation
         for (int j = 0; j < IMG.rows; ++j)
         {
@@ -140,27 +139,21 @@ namespace img{
         }
     }
     AugmentationManager::AugmentationManager(cv::Mat &scr, int random_number, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev){
-        //rotation(scr, angle);
-        //flipping(scr, 0);
-        //shear(scr, bx,by);
-       //cropping(scr, 98, 108);
-       //changing_contrast_brightness(scr, 2.0, 2);
-       //AddGaussianNoise(scr, 50,20.0);
-       //int random_number = randNumberGenerator(8);
+
        algorithmSelector(scr, random_number, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev);
     }
 }
 int main(){
-    cv::Mat scr=cv::imread("/home/cristian/PycharmProjects/tEDRAM/tEDRAM2/training_data/binocular_imgs/binocular_img_left11.png", cv::IMREAD_GRAYSCALE);
+    cv::Mat scr=cv::imread("/home/cristian/PycharmProjects/tEDRAM/tEDRAM2/training_data/binocular_imgs/binocular_img_left79.png", cv::IMREAD_GRAYSCALE);
     if( !scr.data )
     {
         std::cout<<"Error loadind src n"<<std::endl;
         return -1;
     }
     std::cout<<scr.type() <<" "<<CV_8UC1<<std::endl;
-    img::AugmentationManager image(scr,7,30.0, 98, 108, 2.0, 2, 70, 40.0);
+    img::AugmentationManager image(scr,6,30.0, 98, 108, 2.0, 2, 70, 40.0);
     cv::imshow("source:", scr);
-    cv::imshow("rotated:", image.getAugmentedImage());
-    cv::waitKey(0);
+    cv::imshow("rotated:", image.getAugmentedImage(120,160));
+    //cv::waitKey(0);
     return 0;
 }

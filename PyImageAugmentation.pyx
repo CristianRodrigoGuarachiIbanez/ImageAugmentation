@@ -23,6 +23,7 @@ cdef class PyImageDataGenerator:
         self.reserve_3 = image.shape[2]
         self.final_images = image[:]
         self.display(self.final_images, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
+
     @boundscheck(True)
     @wraparound(True)
     @cdivision(True)
@@ -39,7 +40,7 @@ cdef class PyImageDataGenerator:
                     img = self.np2Mat2D(image[i,j,k])
                     assert(img.rows ==image.shape[3] and img.cols==image.shape[4]), "the image dimensions are not identical to the dimensions of the original array"
                     augmented = new AugmentationManager(img, random_number, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
-                    self.augmentedImages.push_back(augmented.getAugmentedImage())
+                    self.augmentedImages.push_back(augmented.getAugmentedImage(image.shape[3], image.shape[4]))
                     del augmented
         if(self.augmentedImages.size()>0):
             self.PyAugmentedImage(self.augmentedImages, image)
@@ -93,6 +94,7 @@ cdef class PyImageDataGenerator:
         for i in range(m.rows):
             for j in range(m.cols):
                 img_array[i,j] = ary[i,j]
+
     @boundscheck(True)
     @wraparound(True)
     @cdivision(True)
@@ -101,14 +103,14 @@ cdef class PyImageDataGenerator:
             int i, j, k, m, n
             unsigned int  total, counter=0
             Mat img
-            uchar[:,:] img_array = zeros((120,160), dtype=uint8)
+            uchar[:,:] img_array = zeros((original.shape[3],original.shape[4]), dtype=uint8)
         total = self.reserve_1*self.reserve_2*self.reserve_3
         assert(images.size()== total), "the size of the vectors is not igual to dimensions of original array"
         for i in range(self.reserve_1):
             for j in range(self.reserve_2):
                 for k in range(self.reserve_3):
                     img = images[counter]
-                    if(img.rows==120 and img.cols==160):
+                    if(img.rows==original.shape[3] and img.cols==original.shape[4]):
                         self.Mat2np(img, img_array)
                         #print("image ->", asarray(img_array).shape, counter)
                         if(counter<total):

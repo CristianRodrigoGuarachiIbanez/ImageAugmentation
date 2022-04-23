@@ -30,9 +30,9 @@ namespace img{
             std::cout<<"COPIED"<<std::endl;
             //IMG = augmentor.IMG
         }
-        inline cv::Mat getAugmentedImage(){
+        inline cv::Mat getAugmentedImage(int rows, int cols){
             cv::Mat resized;
-            cv::resize(IMG, resized, cv::Size(160,120), cv::INTER_LINEAR);
+            cv::resize(IMG, resized, cv::Size(cols,rows), cv::INTER_LINEAR);
             return resized;
         }
         ~AugmentationManager(){

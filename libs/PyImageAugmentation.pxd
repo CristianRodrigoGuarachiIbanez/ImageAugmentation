@@ -41,7 +41,7 @@ cdef extern from "<algorithm>" namespace "std":
 cdef extern from "../ImageAugmentation.h" namespace "img":
     cdef cppclass AugmentationManager:
         AugmentationManager(Mat &scr, int random_number, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev) except+
-        inline Mat getAugmentedImage()
+        inline Mat getAugmentedImage(int rows, int cols)
 
         void rotation(Mat &scr, double angle );
         void flipping(Mat &scr, char direction);
