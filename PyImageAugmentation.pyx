@@ -1,4 +1,4 @@
-
+#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
 from libs.PyImageAugmentation cimport *
 from cython cimport boundscheck, wraparound, cdivision
 from libcpp.vector cimport vector
@@ -24,9 +24,9 @@ cdef class PyImageDataGenerator:
         self.final_images = image[:]
         self.display(self.final_images, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
 
-    @boundscheck(True)
-    @wraparound(True)
-    @cdivision(True)
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(False)
     cdef void display(self, uchar[:,:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):
         cdef:
             int i, j, k
@@ -46,9 +46,9 @@ cdef class PyImageDataGenerator:
             self.PyAugmentedImage(self.augmentedImages, image)
             self.augmentedImages.clear()
 
-    @boundscheck(True)
-    @wraparound(True)
-    @cdivision(True)
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(False)
     cdef inline Mat np2Mat2D(self, uchar[:,:] image ):
         cdef ndarray[uint8_t, ndim=2, mode ='c'] np_buff = ascontiguousarray(image, dtype=uint8)
         cdef unsigned int* im_buff = <unsigned int*> np_buff.data
@@ -59,15 +59,15 @@ cdef class PyImageDataGenerator:
         memcpy(m.data, im_buff, r*c)
         return m
 
-    @boundscheck(True)
-    @wraparound(True)
-    @cdivision(True)
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(False)
     cdef inline int random_number(self, int ceiling)nogil:
         return <int>(rand()%ceiling) +1;
 
-    @boundscheck(True)
-    @wraparound(True)
-    @cdivision(True)
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(False)
     cdef inline void Mat2np(self, Mat&m, uchar[:,:]&img_array):
         # Create buffer to transfer data from m.data
         cdef Py_buffer buf_info
@@ -95,9 +95,9 @@ cdef class PyImageDataGenerator:
             for j in range(m.cols):
                 img_array[i,j] = ary[i,j]
 
-    @boundscheck(True)
-    @wraparound(True)
-    @cdivision(True)
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(False)
     cdef inline void PyAugmentedImage(self, vector[Mat]images, uchar[:,:,:,:,:]&original):
         cdef:
             int i, j, k, m, n
@@ -124,9 +124,9 @@ cdef class PyImageDataGenerator:
                     else:
                         print("[Info]: false number of rows {} and columns {}".format(img.rows, img.cols))
                         raise AssertionError()
-    @boundscheck(True)
-    @wraparound(True)
-    @cdivision(True)
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(False)
     cdef inline vector[int] setLimits(self, int end, int steps):
         cdef:
             int i =0
@@ -136,9 +136,9 @@ cdef class PyImageDataGenerator:
             # print("values ->", i)
         arange.push_back(end)
         return arange
-    @boundscheck(True)
-    @wraparound(True)
-    @cdivision(True)
+    @boundscheck(False)
+    @wraparound(False)
+    @cdivision(False)
     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:
         cdef int value
         if(limits.size()>0):

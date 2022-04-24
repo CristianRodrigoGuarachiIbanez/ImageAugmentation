@@ -1,4 +1,4 @@
-//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g
+//
 // g++ imAugmentation.cpp -o img `pkg-config --libs opencv` ggdb `pkg-config --cflags  `imgRotation.cpp`
 #include "ImageAugmentation.h"
 namespace img{
