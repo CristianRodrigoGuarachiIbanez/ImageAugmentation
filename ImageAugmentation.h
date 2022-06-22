@@ -19,6 +19,7 @@ namespace img{
         void AddGaussianNoise(const cv::Mat &image, double Mean, double StdDev);
         void contrast_brightness(cv::Mat &image, double alpha, int beta);
         void algorithmSelector(cv::Mat &image, int random_number, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev);
+        void shear(cv::Mat&image);
         inline int randNumberGenerator(int &ceiling){
             std::srand(time(0));
             return (int)(std::rand()%ceiling) +1;

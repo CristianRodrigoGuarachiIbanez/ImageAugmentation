@@ -26,7 +26,7 @@ cdef class PyImageDataGenerator:
 
     @boundscheck(False)
     @wraparound(False)
-    @cdivision(False)
+    @cdivision(True)
     cdef void display(self, uchar[:,:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):
         cdef:
             int i, j, k
@@ -48,7 +48,7 @@ cdef class PyImageDataGenerator:
 
     @boundscheck(False)
     @wraparound(False)
-    @cdivision(False)
+    @cdivision(True)
     cdef inline Mat np2Mat2D(self, uchar[:,:] image ):
         cdef ndarray[uint8_t, ndim=2, mode ='c'] np_buff = ascontiguousarray(image, dtype=uint8)
         cdef unsigned int* im_buff = <unsigned int*> np_buff.data
@@ -61,13 +61,13 @@ cdef class PyImageDataGenerator:
 
     @boundscheck(False)
     @wraparound(False)
-    @cdivision(False)
+    @cdivision(True)
     cdef inline int random_number(self, int ceiling)nogil:
         return <int>(rand()%ceiling) +1;
 
     @boundscheck(False)
     @wraparound(False)
-    @cdivision(False)
+    @cdivision(True)
     cdef inline void Mat2np(self, Mat&m, uchar[:,:]&img_array):
         # Create buffer to transfer data from m.data
         cdef Py_buffer buf_info
@@ -97,7 +97,7 @@ cdef class PyImageDataGenerator:
 
     @boundscheck(False)
     @wraparound(False)
-    @cdivision(False)
+    @cdivision(True)
     cdef inline void PyAugmentedImage(self, vector[Mat]images, uchar[:,:,:,:,:]&original):
         cdef:
             int i, j, k, m, n
@@ -126,7 +126,7 @@ cdef class PyImageDataGenerator:
                         raise AssertionError()
     @boundscheck(False)
     @wraparound(False)
-    @cdivision(False)
+    @cdivision(True)
     cdef inline vector[int] setLimits(self, int end, int steps):
         cdef:
             int i =0
@@ -138,7 +138,7 @@ cdef class PyImageDataGenerator:
         return arange
     @boundscheck(False)
     @wraparound(False)
-    @cdivision(False)
+    @cdivision(True)
     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:
         cdef int value
         if(limits.size()>0):

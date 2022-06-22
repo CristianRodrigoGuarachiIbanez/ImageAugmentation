@@ -1,5 +1,5 @@
 //
-// g++ imAugmentation.cpp -o img `pkg-config --libs opencv` ggdb `pkg-config --cflags  `imgRotation.cpp`
+// g++ ImageAugmentation.cpp -o img `pkg-config --libs opencv` ggdb `pkg-config --cflags
 #include "ImageAugmentation.h"
 namespace img{
 
@@ -42,7 +42,7 @@ namespace img{
 
         cv::Point2f offset = -offsets.tl(); //[0, 0]
         cv::Size resultSize = offsets.size();//[900 x 283]
-
+        std::cout<< "result size"<< resultSize<< " rows -> "<< input.rows<< " cols -> "<< input.cols<<std::endl;
         this->IMG = cv::Mat::zeros(resultSize, input.type()); // every pixel here is implicitely shifted by "offset"
         // perform the shearing by back-transformation
         for (int j = 0; j < IMG.rows; ++j)
@@ -112,9 +112,11 @@ namespace img{
 
         this->IMG = copy;
     }
-
+    void AugmentationManager::shear(cv::Mat&image){
+        this->IMG =image;
+    }
     void AugmentationManager::algorithmSelector(cv::Mat &image, int random_number, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev){
-
+        //std::cout << "this value has none function associated  -> "<< random_number<<std::endl;
         if(random_number ==1){
             rotation(image, angle);
         }else if(random_number==2){
@@ -124,9 +126,11 @@ namespace img{
         }else if(random_number==4){
             flipping(image, -1);
         }else if(random_number==5){
-            shearing(image, 0.7,0.0);
+            shear(image);
+            //shearing(image, 0.5,0.0);
         }else if(random_number==6){
-            shearing(image,0.0, 0.7);
+            shear(image);
+            //shearing(image,0.0, 0.5);
         }else if(random_number==7){
             cropping(image, crop_w, crop_h);
         }else if(random_number==8){
@@ -144,7 +148,7 @@ namespace img{
     }
 }
 int main(){
-    cv::Mat scr=cv::imread("/home/cristian/PycharmProjects/tEDRAM/tEDRAM2/training_data/binocular_imgs/binocular_img_left79.png", cv::IMREAD_GRAYSCALE);
+    cv::Mat scr=cv::imread("/home/cristian/PycharmProjects/tEDRAM/tEDRAM2/training_data/disparity_maps/dm/disparity_map_00_0.png", cv::IMREAD_GRAYSCALE);
     if( !scr.data )
     {
         std::cout<<"Error loadind src n"<<std::endl;
@@ -154,6 +158,6 @@ int main(){
     img::AugmentationManager image(scr,6,30.0, 98, 108, 2.0, 2, 70, 40.0);
     cv::imshow("source:", scr);
     cv::imshow("rotated:", image.getAugmentedImage(120,160));
-    //cv::waitKey(0);
+    cv::waitKey(0);
     return 0;
 }

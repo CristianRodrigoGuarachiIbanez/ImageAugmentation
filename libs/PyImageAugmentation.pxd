@@ -50,6 +50,7 @@ cdef extern from "../ImageAugmentation.h" namespace "img":
         void AddGaussianNoise(const Mat &image, double Mean, double StdDev);
         void contrast_brightness(Mat &image, double alpha, int beta);
         void algorithmSelector(Mat &image, int random_number, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev);
+        void shear(Mat&image)
         #int randNumberGenerator(int ceiling)
         Mat IMG;
 
