@@ -3,7 +3,7 @@
 
 # PyImageAugmentation 
 
-This python library helps you with augmenting images for machine learning projects. 
+This python implementation helps you with augmenting images for machine learning projects. 
 It converts a set of input images into a new, much larger set of slightly altered images based on standard augmentation techniques.
 
 
@@ -34,7 +34,7 @@ It converts a set of input images into a new, much larger set of slightly altere
 
 ## Setup
 
-The library supports python 3.4+.
+This implementation supports python 3.4+.
 
 To use the library clone the repository and place it on your local directory.
 Now, you should go into the folder
