@@ -36,8 +36,8 @@ It converts a set of input images into a new, much larger set of slightly altere
 
 This implementation supports python 3.4+.
 
-To use the library clone the repository and place it on your local directory.
-Now, you should go into the folder
+To use it, you should clone the repository and place it on your local directory.
+Now, go into the folder
 
     "/ImageAugmentation"
 
