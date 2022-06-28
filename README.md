@@ -1,7 +1,6 @@
 
 
-# PyImageAugmentation [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
-![C++](https://img.shields.io/badge/C++-Solutions-red.svg?style=flat&logo=c++) 
+# PyImageAugmentation [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/) ![C++](https://img.shields.io/badge/C++-Solutions-red.svg?style=flat&logo=c++) 
 
 This python implementation helps you with augmenting images for machine learning projects. 
 It converts a set of input images into a new, much larger set of slightly altered images based on standard augmentation techniques.
