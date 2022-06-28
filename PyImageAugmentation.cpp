@@ -1971,9 +1971,6 @@ static CYTHON_INLINE PyObject *__Pyx_PyObject_GetItem(PyObject *obj, PyObject* k
 #define __Pyx_PyObject_GetItem(obj, key)  PyObject_GetItem(obj, key)
 #endif
 
-/* BufferIndexError.proto */
-static void __Pyx_RaiseBufferIndexError(int axis);
-
 /* PyFunctionFastCall.proto */
 #if CYTHON_FAST_PYCALL
 #define __Pyx_PyFunction_FastCall(func, args, nargs)\
@@ -3166,7 +3163,7 @@ static int __pyx_pf_20augmentation_manager_20PyImageDataGenerator___cinit__(stru
  *         self.reserve_3 = image.shape[2]
  *         self.final_images = image[:]             # <<<<<<<<<<<<<<
  *         self.display(self.final_images, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
- *     @boundscheck(True)
+ * 
  */
   __PYX_XDEC_MEMVIEW(&__pyx_v_self->final_images, 0);
   __PYX_INC_MEMVIEW(&__pyx_v_image, 0);
@@ -3176,8 +3173,8 @@ static int __pyx_pf_20augmentation_manager_20PyImageDataGenerator___cinit__(stru
  *         self.reserve_3 = image.shape[2]
  *         self.final_images = image[:]
  *         self.display(self.final_images, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)             # <<<<<<<<<<<<<<
- *     @boundscheck(True)
- *     @wraparound(True)
+ * 
+ *     @boundscheck(False)
  */
   if (unlikely(!__pyx_v_self->final_images.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 25, __pyx_L1_error)}
   ((struct __pyx_vtabstruct_20augmentation_manager_PyImageDataGenerator *)__pyx_v_self->__pyx_vtab)->display(__pyx_v_self, __pyx_v_self->final_images, __pyx_v_angle, __pyx_v_crop_w, __pyx_v_crop_h, __pyx_v_bright_alpha, __pyx_v_contrast, __pyx_v_noise_mean, __pyx_v_stdDev);
@@ -3202,8 +3199,8 @@ static int __pyx_pf_20augmentation_manager_20PyImageDataGenerator___cinit__(stru
   return __pyx_r;
 }
 
-/* "PyImageAugmentation.pyx":29
- *     @wraparound(True)
+/* "PyImageAugmentation.pyx":30
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef void display(self, uchar[:,:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):             # <<<<<<<<<<<<<<
  *         cdef:
@@ -3236,7 +3233,7 @@ static void __pyx_f_20augmentation_manager_20PyImageDataGenerator_display(struct
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("display", 0);
 
-  /* "PyImageAugmentation.pyx":35
+  /* "PyImageAugmentation.pyx":36
  *             vector[int] limits
  *             AugmentationManager * augmented
  *         for i in range(self.reserve_1):             # <<<<<<<<<<<<<<
@@ -3248,7 +3245,7 @@ static void __pyx_f_20augmentation_manager_20PyImageDataGenerator_display(struct
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "PyImageAugmentation.pyx":36
+    /* "PyImageAugmentation.pyx":37
  *             AugmentationManager * augmented
  *         for i in range(self.reserve_1):
  *             random_number = self.random_number(9)             # <<<<<<<<<<<<<<
@@ -3257,7 +3254,7 @@ static void __pyx_f_20augmentation_manager_20PyImageDataGenerator_display(struct
  */
     __pyx_v_random_number = __pyx_f_20augmentation_manager_20PyImageDataGenerator_random_number(__pyx_v_self, 9);
 
-    /* "PyImageAugmentation.pyx":37
+    /* "PyImageAugmentation.pyx":38
  *         for i in range(self.reserve_1):
  *             random_number = self.random_number(9)
  *             for j in range(self.reserve_2):             # <<<<<<<<<<<<<<
@@ -3269,7 +3266,7 @@ static void __pyx_f_20augmentation_manager_20PyImageDataGenerator_display(struct
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "PyImageAugmentation.pyx":38
+      /* "PyImageAugmentation.pyx":39
  *             random_number = self.random_number(9)
  *             for j in range(self.reserve_2):
  *                 for k in range(self.reserve_3):             # <<<<<<<<<<<<<<
@@ -3281,7 +3278,7 @@ static void __pyx_f_20augmentation_manager_20PyImageDataGenerator_display(struct
       for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_k = __pyx_t_9;
 
-        /* "PyImageAugmentation.pyx":39
+        /* "PyImageAugmentation.pyx":40
  *             for j in range(self.reserve_2):
  *                 for k in range(self.reserve_3):
  *                     img = self.np2Mat2D(image[i,j,k])             # <<<<<<<<<<<<<<
@@ -3293,43 +3290,19 @@ static void __pyx_f_20augmentation_manager_20PyImageDataGenerator_display(struct
         __PYX_INC_MEMVIEW(&__pyx_t_10, 0);
         {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_i;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_image.shape[0];
     Py_ssize_t __pyx_tmp_stride = __pyx_v_image.strides[0];
-        if (__pyx_tmp_idx < 0)
-            __pyx_tmp_idx += __pyx_tmp_shape;
-        if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
-            PyErr_SetString(PyExc_IndexError,
-                            "Index out of bounds (axis 0)");
-            __PYX_ERR(0, 39, __pyx_L1_error)
-        }
         __pyx_t_10.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_j;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_image.shape[1];
     Py_ssize_t __pyx_tmp_stride = __pyx_v_image.strides[1];
-        if (__pyx_tmp_idx < 0)
-            __pyx_tmp_idx += __pyx_tmp_shape;
-        if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
-            PyErr_SetString(PyExc_IndexError,
-                            "Index out of bounds (axis 1)");
-            __PYX_ERR(0, 39, __pyx_L1_error)
-        }
         __pyx_t_10.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
 {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_k;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_image.shape[2];
     Py_ssize_t __pyx_tmp_stride = __pyx_v_image.strides[2];
-        if (__pyx_tmp_idx < 0)
-            __pyx_tmp_idx += __pyx_tmp_shape;
-        if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
-            PyErr_SetString(PyExc_IndexError,
-                            "Index out of bounds (axis 2)");
-            __PYX_ERR(0, 39, __pyx_L1_error)
-        }
         __pyx_t_10.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
@@ -3346,7 +3319,7 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
         __pyx_t_10.memview = NULL;
         __pyx_t_10.data = NULL;
 
-        /* "PyImageAugmentation.pyx":40
+        /* "PyImageAugmentation.pyx":41
  *                 for k in range(self.reserve_3):
  *                     img = self.np2Mat2D(image[i,j,k])
  *                     assert(img.rows ==image.shape[3] and img.cols==image.shape[4]), "the image dimensions are not identical to the dimensions of the original array"             # <<<<<<<<<<<<<<
@@ -3366,12 +3339,12 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
           __pyx_L9_bool_binop_done:;
           if (unlikely(!__pyx_t_11)) {
             PyErr_SetObject(PyExc_AssertionError, __pyx_kp_s_the_image_dimensions_are_not_ide);
-            __PYX_ERR(0, 40, __pyx_L1_error)
+            __PYX_ERR(0, 41, __pyx_L1_error)
           }
         }
         #endif
 
-        /* "PyImageAugmentation.pyx":41
+        /* "PyImageAugmentation.pyx":42
  *                     img = self.np2Mat2D(image[i,j,k])
  *                     assert(img.rows ==image.shape[3] and img.cols==image.shape[4]), "the image dimensions are not identical to the dimensions of the original array"
  *                     augmented = new AugmentationManager(img, random_number, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)             # <<<<<<<<<<<<<<
@@ -3382,11 +3355,11 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
           __pyx_t_13 = new img::AugmentationManager(__pyx_v_img, __pyx_v_random_number, __pyx_v_angle, __pyx_v_crop_w, __pyx_v_crop_h, __pyx_v_bright_alpha, __pyx_v_contrast, __pyx_v_noise_mean, __pyx_v_stdDev);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 41, __pyx_L1_error)
+          __PYX_ERR(0, 42, __pyx_L1_error)
         }
         __pyx_v_augmented = __pyx_t_13;
 
-        /* "PyImageAugmentation.pyx":42
+        /* "PyImageAugmentation.pyx":43
  *                     assert(img.rows ==image.shape[3] and img.cols==image.shape[4]), "the image dimensions are not identical to the dimensions of the original array"
  *                     augmented = new AugmentationManager(img, random_number, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
  *                     self.augmentedImages.push_back(augmented.getAugmentedImage(image.shape[3], image.shape[4]))             # <<<<<<<<<<<<<<
@@ -3397,10 +3370,10 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
           __pyx_v_self->augmentedImages.push_back(__pyx_v_augmented->getAugmentedImage((__pyx_v_image.shape[3]), (__pyx_v_image.shape[4])));
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 42, __pyx_L1_error)
+          __PYX_ERR(0, 43, __pyx_L1_error)
         }
 
-        /* "PyImageAugmentation.pyx":43
+        /* "PyImageAugmentation.pyx":44
  *                     augmented = new AugmentationManager(img, random_number, angle, crop_w, crop_h, bright_alpha, contrast, noise_mean, stdDev)
  *                     self.augmentedImages.push_back(augmented.getAugmentedImage(image.shape[3], image.shape[4]))
  *                     del augmented             # <<<<<<<<<<<<<<
@@ -3412,7 +3385,7 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
     }
   }
 
-  /* "PyImageAugmentation.pyx":44
+  /* "PyImageAugmentation.pyx":45
  *                     self.augmentedImages.push_back(augmented.getAugmentedImage(image.shape[3], image.shape[4]))
  *                     del augmented
  *         if(self.augmentedImages.size()>0):             # <<<<<<<<<<<<<<
@@ -3422,7 +3395,7 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
   __pyx_t_11 = ((__pyx_v_self->augmentedImages.size() > 0) != 0);
   if (__pyx_t_11) {
 
-    /* "PyImageAugmentation.pyx":45
+    /* "PyImageAugmentation.pyx":46
  *                     del augmented
  *         if(self.augmentedImages.size()>0):
  *             self.PyAugmentedImage(self.augmentedImages, image)             # <<<<<<<<<<<<<<
@@ -3431,16 +3404,16 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
  */
     __pyx_f_20augmentation_manager_20PyImageDataGenerator_PyAugmentedImage(__pyx_v_self, __pyx_v_self->augmentedImages, __pyx_v_image);
 
-    /* "PyImageAugmentation.pyx":46
+    /* "PyImageAugmentation.pyx":47
  *         if(self.augmentedImages.size()>0):
  *             self.PyAugmentedImage(self.augmentedImages, image)
  *             self.augmentedImages.clear()             # <<<<<<<<<<<<<<
  * 
- *     @boundscheck(True)
+ *     @boundscheck(False)
  */
     __pyx_v_self->augmentedImages.clear();
 
-    /* "PyImageAugmentation.pyx":44
+    /* "PyImageAugmentation.pyx":45
  *                     self.augmentedImages.push_back(augmented.getAugmentedImage(image.shape[3], image.shape[4]))
  *                     del augmented
  *         if(self.augmentedImages.size()>0):             # <<<<<<<<<<<<<<
@@ -3449,8 +3422,8 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
  */
   }
 
-  /* "PyImageAugmentation.pyx":29
- *     @wraparound(True)
+  /* "PyImageAugmentation.pyx":30
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef void display(self, uchar[:,:,:,:,:]&image, double angle, int crop_w, int crop_h, float bright_alpha, int contrast, int noise_mean, float stdDev):             # <<<<<<<<<<<<<<
  *         cdef:
@@ -3466,8 +3439,8 @@ __pyx_v_img = __pyx_f_20augmentation_manager_20PyImageDataGenerator_np2Mat2D(__p
   __Pyx_RefNannyFinishContext();
 }
 
-/* "PyImageAugmentation.pyx":51
- *     @wraparound(True)
+/* "PyImageAugmentation.pyx":52
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline Mat np2Mat2D(self, uchar[:,:] image ):             # <<<<<<<<<<<<<<
  *         cdef ndarray[uint8_t, ndim=2, mode ='c'] np_buff = ascontiguousarray(image, dtype=uint8)
@@ -3498,40 +3471,40 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
   __pyx_pybuffernd_np_buff.data = NULL;
   __pyx_pybuffernd_np_buff.rcbuffer = &__pyx_pybuffer_np_buff;
 
-  /* "PyImageAugmentation.pyx":52
+  /* "PyImageAugmentation.pyx":53
  *     @cdivision(True)
  *     cdef inline Mat np2Mat2D(self, uchar[:,:] image ):
  *         cdef ndarray[uint8_t, ndim=2, mode ='c'] np_buff = ascontiguousarray(image, dtype=uint8)             # <<<<<<<<<<<<<<
  *         cdef unsigned int* im_buff = <unsigned int*> np_buff.data
  *         cdef int r = image.shape[0]
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_ascontiguousarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_image, 2, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_20augmentation_manager_uchar, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_20augmentation_manager_uchar, 0);; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_image, 2, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_20augmentation_manager_uchar, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_20augmentation_manager_uchar, 0);; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_uint8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_uint8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 53, __pyx_L1_error)
   __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_np_buff.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_5numpy_uint8_t, PyBUF_FORMAT| PyBUF_C_CONTIGUOUS, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_np_buff = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_np_buff.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 52, __pyx_L1_error)
+      __PYX_ERR(0, 53, __pyx_L1_error)
     } else {__pyx_pybuffernd_np_buff.diminfo[0].strides = __pyx_pybuffernd_np_buff.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_np_buff.diminfo[0].shape = __pyx_pybuffernd_np_buff.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_np_buff.diminfo[1].strides = __pyx_pybuffernd_np_buff.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_np_buff.diminfo[1].shape = __pyx_pybuffernd_np_buff.rcbuffer->pybuffer.shape[1];
     }
   }
@@ -3539,7 +3512,7 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
   __pyx_v_np_buff = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "PyImageAugmentation.pyx":53
+  /* "PyImageAugmentation.pyx":54
  *     cdef inline Mat np2Mat2D(self, uchar[:,:] image ):
  *         cdef ndarray[uint8_t, ndim=2, mode ='c'] np_buff = ascontiguousarray(image, dtype=uint8)
  *         cdef unsigned int* im_buff = <unsigned int*> np_buff.data             # <<<<<<<<<<<<<<
@@ -3548,7 +3521,7 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
  */
   __pyx_v_im_buff = ((unsigned int *)__pyx_v_np_buff->data);
 
-  /* "PyImageAugmentation.pyx":54
+  /* "PyImageAugmentation.pyx":55
  *         cdef ndarray[uint8_t, ndim=2, mode ='c'] np_buff = ascontiguousarray(image, dtype=uint8)
  *         cdef unsigned int* im_buff = <unsigned int*> np_buff.data
  *         cdef int r = image.shape[0]             # <<<<<<<<<<<<<<
@@ -3557,7 +3530,7 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
  */
   __pyx_v_r = (__pyx_v_image.shape[0]);
 
-  /* "PyImageAugmentation.pyx":55
+  /* "PyImageAugmentation.pyx":56
  *         cdef unsigned int* im_buff = <unsigned int*> np_buff.data
  *         cdef int r = image.shape[0]
  *         cdef int c = image.shape[1]             # <<<<<<<<<<<<<<
@@ -3566,7 +3539,7 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
  */
   __pyx_v_c = (__pyx_v_image.shape[1]);
 
-  /* "PyImageAugmentation.pyx":57
+  /* "PyImageAugmentation.pyx":58
  *         cdef int c = image.shape[1]
  *         cdef Mat m
  *         m.create(r, c, CV_8UC1)             # <<<<<<<<<<<<<<
@@ -3575,7 +3548,7 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
  */
   __pyx_v_m.create(__pyx_v_r, __pyx_v_c, CV_8UC1);
 
-  /* "PyImageAugmentation.pyx":58
+  /* "PyImageAugmentation.pyx":59
  *         cdef Mat m
  *         m.create(r, c, CV_8UC1)
  *         memcpy(m.data, im_buff, r*c)             # <<<<<<<<<<<<<<
@@ -3584,18 +3557,18 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
  */
   (void)(memcpy(__pyx_v_m.data, __pyx_v_im_buff, (__pyx_v_r * __pyx_v_c)));
 
-  /* "PyImageAugmentation.pyx":59
+  /* "PyImageAugmentation.pyx":60
  *         m.create(r, c, CV_8UC1)
  *         memcpy(m.data, im_buff, r*c)
  *         return m             # <<<<<<<<<<<<<<
  * 
- *     @boundscheck(True)
+ *     @boundscheck(False)
  */
   __pyx_r = __pyx_v_m;
   goto __pyx_L0;
 
-  /* "PyImageAugmentation.pyx":51
- *     @wraparound(True)
+  /* "PyImageAugmentation.pyx":52
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline Mat np2Mat2D(self, uchar[:,:] image ):             # <<<<<<<<<<<<<<
  *         cdef ndarray[uint8_t, ndim=2, mode ='c'] np_buff = ascontiguousarray(image, dtype=uint8)
@@ -3625,8 +3598,8 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
   return __pyx_r;
 }
 
-/* "PyImageAugmentation.pyx":64
- *     @wraparound(True)
+/* "PyImageAugmentation.pyx":65
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline int random_number(self, int ceiling)nogil:             # <<<<<<<<<<<<<<
  *         return <int>(rand()%ceiling) +1;
@@ -3636,18 +3609,18 @@ static CYTHON_INLINE cv::Mat __pyx_f_20augmentation_manager_20PyImageDataGenerat
 static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_random_number(CYTHON_UNUSED struct __pyx_obj_20augmentation_manager_PyImageDataGenerator *__pyx_v_self, int __pyx_v_ceiling) {
   int __pyx_r;
 
-  /* "PyImageAugmentation.pyx":65
+  /* "PyImageAugmentation.pyx":66
  *     @cdivision(True)
  *     cdef inline int random_number(self, int ceiling)nogil:
  *         return <int>(rand()%ceiling) +1;             # <<<<<<<<<<<<<<
  * 
- *     @boundscheck(True)
+ *     @boundscheck(False)
  */
   __pyx_r = (((int)(rand() % __pyx_v_ceiling)) + 1);
   goto __pyx_L0;
 
-  /* "PyImageAugmentation.pyx":64
- *     @wraparound(True)
+  /* "PyImageAugmentation.pyx":65
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline int random_number(self, int ceiling)nogil:             # <<<<<<<<<<<<<<
  *         return <int>(rand()%ceiling) +1;
@@ -3659,8 +3632,8 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_r
   return __pyx_r;
 }
 
-/* "PyImageAugmentation.pyx":70
- *     @wraparound(True)
+/* "PyImageAugmentation.pyx":71
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline void Mat2np(self, Mat&m, uchar[:,:]&img_array):             # <<<<<<<<<<<<<<
  *         # Create buffer to transfer data from m.data
@@ -3689,13 +3662,12 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   __pyx_t_20augmentation_manager_uchar __pyx_t_12;
   Py_ssize_t __pyx_t_13;
   Py_ssize_t __pyx_t_14;
-  int __pyx_t_15;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("Mat2np", 0);
 
-  /* "PyImageAugmentation.pyx":75
+  /* "PyImageAugmentation.pyx":76
  * 
  *         # Define the size / len of data
  *         cdef size_t len = m.rows*m.cols*m.elemSize()  #m.channels()*sizeof(CV_8UC3)             # <<<<<<<<<<<<<<
@@ -3704,7 +3676,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
   __pyx_v_len = ((__pyx_v_m.rows * __pyx_v_m.cols) * __pyx_v_m.elemSize());
 
-  /* "PyImageAugmentation.pyx":78
+  /* "PyImageAugmentation.pyx":79
  * 
  *         # Fill buffer
  *         PyBuffer_FillInfo(&buf_info, NULL, m.data, len, 1, PyBUF_FULL_RO)             # <<<<<<<<<<<<<<
@@ -3713,19 +3685,19 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
   (void)(PyBuffer_FillInfo((&__pyx_v_buf_info), NULL, __pyx_v_m.data, __pyx_v_len, 1, PyBUF_FULL_RO));
 
-  /* "PyImageAugmentation.pyx":81
+  /* "PyImageAugmentation.pyx":82
  * 
  *         # Get Pyobject from buffer data
  *         Pydata  = PyMemoryView_FromBuffer(&buf_info)             # <<<<<<<<<<<<<<
  * 
  *         # Create ndarray with data
  */
-  __pyx_t_1 = PyMemoryView_FromBuffer((&__pyx_v_buf_info)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = PyMemoryView_FromBuffer((&__pyx_v_buf_info)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_Pydata = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "PyImageAugmentation.pyx":85
+  /* "PyImageAugmentation.pyx":86
  *         # Create ndarray with data
  *         #print("channels ->", m.channels(), m.depth(), CV_32F)
  *         assert (m.channels()<2), "this function does not support images with 3 channels"             # <<<<<<<<<<<<<<
@@ -3736,12 +3708,12 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   if (unlikely(!Py_OptimizeFlag)) {
     if (unlikely(!((__pyx_v_m.channels() < 2) != 0))) {
       PyErr_SetObject(PyExc_AssertionError, __pyx_kp_s_this_function_does_not_support_i);
-      __PYX_ERR(0, 85, __pyx_L1_error)
+      __PYX_ERR(0, 86, __pyx_L1_error)
     }
   }
   #endif
 
-  /* "PyImageAugmentation.pyx":86
+  /* "PyImageAugmentation.pyx":87
  *         #print("channels ->", m.channels(), m.depth(), CV_32F)
  *         assert (m.channels()<2), "this function does not support images with 3 channels"
  *         if m.depth() == CV_32F :             # <<<<<<<<<<<<<<
@@ -3751,20 +3723,20 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   __pyx_t_2 = ((__pyx_v_m.depth() == CV_32F) != 0);
   if (__pyx_t_2) {
 
-    /* "PyImageAugmentation.pyx":87
+    /* "PyImageAugmentation.pyx":88
  *         assert (m.channels()<2), "this function does not support images with 3 channels"
  *         if m.depth() == CV_32F :
  *             ary = ndarray(shape=(m.rows, m.cols), buffer=Pydata, order='c', dtype=float32)             # <<<<<<<<<<<<<<
  *         else :
  *             #8-bit image
  */
-    __pyx_t_1 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_m.rows); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_m.rows); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_m.cols); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_m.cols); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
@@ -3772,21 +3744,21 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
     PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
     __pyx_t_3 = 0;
     __pyx_t_4 = 0;
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_5) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_shape, __pyx_t_5) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_buffer, __pyx_v_Pydata) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_order, __pyx_n_s_c) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_float32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 87, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_buffer, __pyx_v_Pydata) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_order, __pyx_n_s_c) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_float32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5numpy_ndarray), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5numpy_ndarray), __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 88, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_ary = ((PyArrayObject *)__pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "PyImageAugmentation.pyx":86
+    /* "PyImageAugmentation.pyx":87
  *         #print("channels ->", m.channels(), m.depth(), CV_32F)
  *         assert (m.channels()<2), "this function does not support images with 3 channels"
  *         if m.depth() == CV_32F :             # <<<<<<<<<<<<<<
@@ -3796,7 +3768,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
     goto __pyx_L3;
   }
 
-  /* "PyImageAugmentation.pyx":90
+  /* "PyImageAugmentation.pyx":91
  *         else :
  *             #8-bit image
  *             ary = ndarray(shape=(m.rows, m.cols), buffer=Pydata, order='c', dtype=uint8)             # <<<<<<<<<<<<<<
@@ -3804,13 +3776,13 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  *         cdef int i, j
  */
   /*else*/ {
-    __pyx_t_5 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_m.rows); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_m.rows); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_m.cols); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_m.cols); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_1);
     PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
@@ -3818,15 +3790,15 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
     PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_4);
     __pyx_t_1 = 0;
     __pyx_t_4 = 0;
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_shape, __pyx_t_3) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_buffer, __pyx_v_Pydata) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_order, __pyx_n_s_c) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_uint8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_buffer, __pyx_v_Pydata) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_order, __pyx_n_s_c) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_uint8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5numpy_ndarray), __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_5numpy_ndarray), __pyx_empty_tuple, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_ary = ((PyArrayObject *)__pyx_t_3);
@@ -3834,7 +3806,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   }
   __pyx_L3:;
 
-  /* "PyImageAugmentation.pyx":93
+  /* "PyImageAugmentation.pyx":94
  * 
  *         cdef int i, j
  *         for i in range(m.rows):             # <<<<<<<<<<<<<<
@@ -3846,30 +3818,30 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "PyImageAugmentation.pyx":94
+    /* "PyImageAugmentation.pyx":95
  *         cdef int i, j
  *         for i in range(m.rows):
  *             for j in range(m.cols):             # <<<<<<<<<<<<<<
  *                 img_array[i,j] = ary[i,j]
- *     @boundscheck(True)
+ * 
  */
     __pyx_t_9 = __pyx_v_m.cols;
     __pyx_t_10 = __pyx_t_9;
     for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
       __pyx_v_j = __pyx_t_11;
 
-      /* "PyImageAugmentation.pyx":95
+      /* "PyImageAugmentation.pyx":96
  *         for i in range(m.rows):
  *             for j in range(m.cols):
  *                 img_array[i,j] = ary[i,j]             # <<<<<<<<<<<<<<
- *     @boundscheck(True)
- *     @wraparound(True)
+ * 
+ *     @boundscheck(False)
  */
-      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
@@ -3877,32 +3849,19 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
       PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
       __pyx_t_3 = 0;
       __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_ary), __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 95, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_ary), __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_12 = __Pyx_PyInt_As_unsigned_char(__pyx_t_5); if (unlikely((__pyx_t_12 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 95, __pyx_L1_error)
+      __pyx_t_12 = __Pyx_PyInt_As_unsigned_char(__pyx_t_5); if (unlikely((__pyx_t_12 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_13 = __pyx_v_i;
       __pyx_t_14 = __pyx_v_j;
-      __pyx_t_15 = -1;
-      if (__pyx_t_13 < 0) {
-        __pyx_t_13 += __pyx_v_img_array.shape[0];
-        if (unlikely(__pyx_t_13 < 0)) __pyx_t_15 = 0;
-      } else if (unlikely(__pyx_t_13 >= __pyx_v_img_array.shape[0])) __pyx_t_15 = 0;
-      if (__pyx_t_14 < 0) {
-        __pyx_t_14 += __pyx_v_img_array.shape[1];
-        if (unlikely(__pyx_t_14 < 0)) __pyx_t_15 = 1;
-      } else if (unlikely(__pyx_t_14 >= __pyx_v_img_array.shape[1])) __pyx_t_15 = 1;
-      if (unlikely(__pyx_t_15 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_15);
-        __PYX_ERR(0, 95, __pyx_L1_error)
-      }
       *((__pyx_t_20augmentation_manager_uchar *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_img_array.data + __pyx_t_13 * __pyx_v_img_array.strides[0]) ) + __pyx_t_14 * __pyx_v_img_array.strides[1]) )) = __pyx_t_12;
     }
   }
 
-  /* "PyImageAugmentation.pyx":70
- *     @wraparound(True)
+  /* "PyImageAugmentation.pyx":71
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline void Mat2np(self, Mat&m, uchar[:,:]&img_array):             # <<<<<<<<<<<<<<
  *         # Create buffer to transfer data from m.data
@@ -3923,8 +3882,8 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "PyImageAugmentation.pyx":99
- *     @wraparound(True)
+/* "PyImageAugmentation.pyx":101
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline void PyAugmentedImage(self, vector[Mat]images, uchar[:,:,:,:,:]&original):             # <<<<<<<<<<<<<<
  *         cdef:
@@ -3968,18 +3927,17 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   int __pyx_t_24;
   Py_ssize_t __pyx_t_25;
   Py_ssize_t __pyx_t_26;
-  int __pyx_t_27;
+  Py_ssize_t __pyx_t_27;
   Py_ssize_t __pyx_t_28;
   Py_ssize_t __pyx_t_29;
   Py_ssize_t __pyx_t_30;
   Py_ssize_t __pyx_t_31;
-  Py_ssize_t __pyx_t_32;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyAugmentedImage", 0);
 
-  /* "PyImageAugmentation.pyx":102
+  /* "PyImageAugmentation.pyx":104
  *         cdef:
  *             int i, j, k, m, n
  *             unsigned int  total, counter=0             # <<<<<<<<<<<<<<
@@ -3988,20 +3946,20 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
   __pyx_v_counter = 0;
 
-  /* "PyImageAugmentation.pyx":104
+  /* "PyImageAugmentation.pyx":106
  *             unsigned int  total, counter=0
  *             Mat img
  *             uchar[:,:] img_array = zeros((original.shape[3],original.shape[4]), dtype=uint8)             # <<<<<<<<<<<<<<
  *         total = self.reserve_1*self.reserve_2*self.reserve_3
  *         assert(images.size()== total), "the size of the vectors is not igual to dimensions of original array"
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyInt_FromSsize_t((__pyx_v_original.shape[3])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_2 = PyInt_FromSsize_t((__pyx_v_original.shape[3])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyInt_FromSsize_t((__pyx_v_original.shape[4])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t((__pyx_v_original.shape[4])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -4009,29 +3967,29 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
   __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_uint8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_uint8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_20augmentation_manager_uchar(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dsds_nn___pyx_t_20augmentation_manager_uchar(__pyx_t_2, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_img_array = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "PyImageAugmentation.pyx":105
+  /* "PyImageAugmentation.pyx":107
  *             Mat img
  *             uchar[:,:] img_array = zeros((original.shape[3],original.shape[4]), dtype=uint8)
  *         total = self.reserve_1*self.reserve_2*self.reserve_3             # <<<<<<<<<<<<<<
@@ -4040,7 +3998,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
   __pyx_v_total = ((__pyx_v_self->reserve_1 * __pyx_v_self->reserve_2) * __pyx_v_self->reserve_3);
 
-  /* "PyImageAugmentation.pyx":106
+  /* "PyImageAugmentation.pyx":108
  *             uchar[:,:] img_array = zeros((original.shape[3],original.shape[4]), dtype=uint8)
  *         total = self.reserve_1*self.reserve_2*self.reserve_3
  *         assert(images.size()== total), "the size of the vectors is not igual to dimensions of original array"             # <<<<<<<<<<<<<<
@@ -4051,12 +4009,12 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   if (unlikely(!Py_OptimizeFlag)) {
     if (unlikely(!((__pyx_v_images.size() == __pyx_v_total) != 0))) {
       PyErr_SetObject(PyExc_AssertionError, __pyx_kp_s_the_size_of_the_vectors_is_not_i);
-      __PYX_ERR(0, 106, __pyx_L1_error)
+      __PYX_ERR(0, 108, __pyx_L1_error)
     }
   }
   #endif
 
-  /* "PyImageAugmentation.pyx":107
+  /* "PyImageAugmentation.pyx":109
  *         total = self.reserve_1*self.reserve_2*self.reserve_3
  *         assert(images.size()== total), "the size of the vectors is not igual to dimensions of original array"
  *         for i in range(self.reserve_1):             # <<<<<<<<<<<<<<
@@ -4068,7 +4026,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "PyImageAugmentation.pyx":108
+    /* "PyImageAugmentation.pyx":110
  *         assert(images.size()== total), "the size of the vectors is not igual to dimensions of original array"
  *         for i in range(self.reserve_1):
  *             for j in range(self.reserve_2):             # <<<<<<<<<<<<<<
@@ -4080,7 +4038,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
     for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
       __pyx_v_j = __pyx_t_11;
 
-      /* "PyImageAugmentation.pyx":109
+      /* "PyImageAugmentation.pyx":111
  *         for i in range(self.reserve_1):
  *             for j in range(self.reserve_2):
  *                 for k in range(self.reserve_3):             # <<<<<<<<<<<<<<
@@ -4092,7 +4050,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
       for (__pyx_t_14 = 0; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
         __pyx_v_k = __pyx_t_14;
 
-        /* "PyImageAugmentation.pyx":110
+        /* "PyImageAugmentation.pyx":112
  *             for j in range(self.reserve_2):
  *                 for k in range(self.reserve_3):
  *                     img = images[counter]             # <<<<<<<<<<<<<<
@@ -4101,7 +4059,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
         __pyx_v_img = (__pyx_v_images[__pyx_v_counter]);
 
-        /* "PyImageAugmentation.pyx":111
+        /* "PyImageAugmentation.pyx":113
  *                 for k in range(self.reserve_3):
  *                     img = images[counter]
  *                     if(img.rows==original.shape[3] and img.cols==original.shape[4]):             # <<<<<<<<<<<<<<
@@ -4119,7 +4077,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
         __pyx_L10_bool_binop_done:;
         if (__pyx_t_15) {
 
-          /* "PyImageAugmentation.pyx":112
+          /* "PyImageAugmentation.pyx":114
  *                     img = images[counter]
  *                     if(img.rows==original.shape[3] and img.cols==original.shape[4]):
  *                         self.Mat2np(img, img_array)             # <<<<<<<<<<<<<<
@@ -4128,7 +4086,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
           __pyx_f_20augmentation_manager_20PyImageDataGenerator_Mat2np(__pyx_v_self, __pyx_v_img, __pyx_v_img_array);
 
-          /* "PyImageAugmentation.pyx":114
+          /* "PyImageAugmentation.pyx":116
  *                         self.Mat2np(img, img_array)
  *                         #print("image ->", asarray(img_array).shape, counter)
  *                         if(counter<total):             # <<<<<<<<<<<<<<
@@ -4138,7 +4096,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
           __pyx_t_15 = ((__pyx_v_counter < __pyx_v_total) != 0);
           if (__pyx_t_15) {
 
-            /* "PyImageAugmentation.pyx":115
+            /* "PyImageAugmentation.pyx":117
  *                         #print("image ->", asarray(img_array).shape, counter)
  *                         if(counter<total):
  *                            counter+=1             # <<<<<<<<<<<<<<
@@ -4147,7 +4105,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
             __pyx_v_counter = (__pyx_v_counter + 1);
 
-            /* "PyImageAugmentation.pyx":114
+            /* "PyImageAugmentation.pyx":116
  *                         self.Mat2np(img, img_array)
  *                         #print("image ->", asarray(img_array).shape, counter)
  *                         if(counter<total):             # <<<<<<<<<<<<<<
@@ -4157,7 +4115,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
             goto __pyx_L12;
           }
 
-          /* "PyImageAugmentation.pyx":117
+          /* "PyImageAugmentation.pyx":119
  *                            counter+=1
  *                         else:
  *                             print("[Info]: Counter out of boundaries -> {} != {}".format(counter, total))             # <<<<<<<<<<<<<<
@@ -4165,11 +4123,11 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  *                         for m in range(img.rows):
  */
           /*else*/ {
-            __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Info_Counter_out_of_boundaries, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
+            __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Info_Counter_out_of_boundaries, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
-            __pyx_t_3 = __Pyx_PyInt_From_unsigned_int(__pyx_v_counter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
+            __pyx_t_3 = __Pyx_PyInt_From_unsigned_int(__pyx_v_counter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
-            __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_v_total); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 117, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_v_total); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             __pyx_t_17 = NULL;
             __pyx_t_18 = 0;
@@ -4186,7 +4144,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
             #if CYTHON_FAST_PYCALL
             if (PyFunction_Check(__pyx_t_4)) {
               PyObject *__pyx_temp[3] = {__pyx_t_17, __pyx_t_3, __pyx_t_1};
-              __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
+              __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4196,7 +4154,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
             #if CYTHON_FAST_PYCCALL
             if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
               PyObject *__pyx_temp[3] = {__pyx_t_17, __pyx_t_3, __pyx_t_1};
-              __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
+              __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4204,7 +4162,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
             } else
             #endif
             {
-              __pyx_t_19 = PyTuple_New(2+__pyx_t_18); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 117, __pyx_L1_error)
+              __pyx_t_19 = PyTuple_New(2+__pyx_t_18); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 119, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_19);
               if (__pyx_t_17) {
                 __Pyx_GIVEREF(__pyx_t_17); PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_t_17); __pyx_t_17 = NULL;
@@ -4215,30 +4173,30 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
               PyTuple_SET_ITEM(__pyx_t_19, 1+__pyx_t_18, __pyx_t_1);
               __pyx_t_3 = 0;
               __pyx_t_1 = 0;
-              __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_19, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
+              __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_19, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
             }
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-            if (__Pyx_PrintOne(0, __pyx_t_2) < 0) __PYX_ERR(0, 117, __pyx_L1_error)
+            if (__Pyx_PrintOne(0, __pyx_t_2) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-            /* "PyImageAugmentation.pyx":118
+            /* "PyImageAugmentation.pyx":120
  *                         else:
  *                             print("[Info]: Counter out of boundaries -> {} != {}".format(counter, total))
  *                             raise AssertionError()             # <<<<<<<<<<<<<<
  *                         for m in range(img.rows):
  *                             for n in range(img.cols):
  */
-            __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_builtin_AssertionError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_builtin_AssertionError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_Raise(__pyx_t_2, 0, 0, 0);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-            __PYX_ERR(0, 118, __pyx_L1_error)
+            __PYX_ERR(0, 120, __pyx_L1_error)
           }
           __pyx_L12:;
 
-          /* "PyImageAugmentation.pyx":119
+          /* "PyImageAugmentation.pyx":121
  *                             print("[Info]: Counter out of boundaries -> {} != {}".format(counter, total))
  *                             raise AssertionError()
  *                         for m in range(img.rows):             # <<<<<<<<<<<<<<
@@ -4250,7 +4208,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
           for (__pyx_t_21 = 0; __pyx_t_21 < __pyx_t_20; __pyx_t_21+=1) {
             __pyx_v_m = __pyx_t_21;
 
-            /* "PyImageAugmentation.pyx":120
+            /* "PyImageAugmentation.pyx":122
  *                             raise AssertionError()
  *                         for m in range(img.rows):
  *                             for n in range(img.cols):             # <<<<<<<<<<<<<<
@@ -4262,7 +4220,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
             for (__pyx_t_24 = 0; __pyx_t_24 < __pyx_t_23; __pyx_t_24+=1) {
               __pyx_v_n = __pyx_t_24;
 
-              /* "PyImageAugmentation.pyx":121
+              /* "PyImageAugmentation.pyx":123
  *                         for m in range(img.rows):
  *                             for n in range(img.cols):
  *                                 original[i,j,k,m,n] = img_array[m,n]             # <<<<<<<<<<<<<<
@@ -4271,54 +4229,16 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
  */
               __pyx_t_25 = __pyx_v_m;
               __pyx_t_26 = __pyx_v_n;
-              __pyx_t_27 = -1;
-              if (__pyx_t_25 < 0) {
-                __pyx_t_25 += __pyx_v_img_array.shape[0];
-                if (unlikely(__pyx_t_25 < 0)) __pyx_t_27 = 0;
-              } else if (unlikely(__pyx_t_25 >= __pyx_v_img_array.shape[0])) __pyx_t_27 = 0;
-              if (__pyx_t_26 < 0) {
-                __pyx_t_26 += __pyx_v_img_array.shape[1];
-                if (unlikely(__pyx_t_26 < 0)) __pyx_t_27 = 1;
-              } else if (unlikely(__pyx_t_26 >= __pyx_v_img_array.shape[1])) __pyx_t_27 = 1;
-              if (unlikely(__pyx_t_27 != -1)) {
-                __Pyx_RaiseBufferIndexError(__pyx_t_27);
-                __PYX_ERR(0, 121, __pyx_L1_error)
-              }
-              __pyx_t_28 = __pyx_v_i;
-              __pyx_t_29 = __pyx_v_j;
-              __pyx_t_30 = __pyx_v_k;
-              __pyx_t_31 = __pyx_v_m;
-              __pyx_t_32 = __pyx_v_n;
-              __pyx_t_27 = -1;
-              if (__pyx_t_28 < 0) {
-                __pyx_t_28 += __pyx_v_original.shape[0];
-                if (unlikely(__pyx_t_28 < 0)) __pyx_t_27 = 0;
-              } else if (unlikely(__pyx_t_28 >= __pyx_v_original.shape[0])) __pyx_t_27 = 0;
-              if (__pyx_t_29 < 0) {
-                __pyx_t_29 += __pyx_v_original.shape[1];
-                if (unlikely(__pyx_t_29 < 0)) __pyx_t_27 = 1;
-              } else if (unlikely(__pyx_t_29 >= __pyx_v_original.shape[1])) __pyx_t_27 = 1;
-              if (__pyx_t_30 < 0) {
-                __pyx_t_30 += __pyx_v_original.shape[2];
-                if (unlikely(__pyx_t_30 < 0)) __pyx_t_27 = 2;
-              } else if (unlikely(__pyx_t_30 >= __pyx_v_original.shape[2])) __pyx_t_27 = 2;
-              if (__pyx_t_31 < 0) {
-                __pyx_t_31 += __pyx_v_original.shape[3];
-                if (unlikely(__pyx_t_31 < 0)) __pyx_t_27 = 3;
-              } else if (unlikely(__pyx_t_31 >= __pyx_v_original.shape[3])) __pyx_t_27 = 3;
-              if (__pyx_t_32 < 0) {
-                __pyx_t_32 += __pyx_v_original.shape[4];
-                if (unlikely(__pyx_t_32 < 0)) __pyx_t_27 = 4;
-              } else if (unlikely(__pyx_t_32 >= __pyx_v_original.shape[4])) __pyx_t_27 = 4;
-              if (unlikely(__pyx_t_27 != -1)) {
-                __Pyx_RaiseBufferIndexError(__pyx_t_27);
-                __PYX_ERR(0, 121, __pyx_L1_error)
-              }
-              *((__pyx_t_20augmentation_manager_uchar *) ( /* dim=4 */ (( /* dim=3 */ (( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_original.data + __pyx_t_28 * __pyx_v_original.strides[0]) ) + __pyx_t_29 * __pyx_v_original.strides[1]) ) + __pyx_t_30 * __pyx_v_original.strides[2]) ) + __pyx_t_31 * __pyx_v_original.strides[3]) ) + __pyx_t_32 * __pyx_v_original.strides[4]) )) = (*((__pyx_t_20augmentation_manager_uchar *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_img_array.data + __pyx_t_25 * __pyx_v_img_array.strides[0]) ) + __pyx_t_26 * __pyx_v_img_array.strides[1]) )));
+              __pyx_t_27 = __pyx_v_i;
+              __pyx_t_28 = __pyx_v_j;
+              __pyx_t_29 = __pyx_v_k;
+              __pyx_t_30 = __pyx_v_m;
+              __pyx_t_31 = __pyx_v_n;
+              *((__pyx_t_20augmentation_manager_uchar *) ( /* dim=4 */ (( /* dim=3 */ (( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_original.data + __pyx_t_27 * __pyx_v_original.strides[0]) ) + __pyx_t_28 * __pyx_v_original.strides[1]) ) + __pyx_t_29 * __pyx_v_original.strides[2]) ) + __pyx_t_30 * __pyx_v_original.strides[3]) ) + __pyx_t_31 * __pyx_v_original.strides[4]) )) = (*((__pyx_t_20augmentation_manager_uchar *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_img_array.data + __pyx_t_25 * __pyx_v_img_array.strides[0]) ) + __pyx_t_26 * __pyx_v_img_array.strides[1]) )));
             }
           }
 
-          /* "PyImageAugmentation.pyx":111
+          /* "PyImageAugmentation.pyx":113
  *                 for k in range(self.reserve_3):
  *                     img = images[counter]
  *                     if(img.rows==original.shape[3] and img.cols==original.shape[4]):             # <<<<<<<<<<<<<<
@@ -4328,19 +4248,19 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
           goto __pyx_L9;
         }
 
-        /* "PyImageAugmentation.pyx":123
+        /* "PyImageAugmentation.pyx":125
  *                                 original[i,j,k,m,n] = img_array[m,n]
  *                     else:
  *                         print("[Info]: false number of rows {} and columns {}".format(img.rows, img.cols))             # <<<<<<<<<<<<<<
  *                         raise AssertionError()
- *     @boundscheck(True)
+ *     @boundscheck(False)
  */
         /*else*/ {
-          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Info_false_number_of_rows_and_c, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_kp_s_Info_false_number_of_rows_and_c, __pyx_n_s_format); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_19 = __Pyx_PyInt_From_int(__pyx_v_img.rows); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_19 = __Pyx_PyInt_From_int(__pyx_v_img.rows); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_19);
-          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_img.cols); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_img.cols); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __pyx_t_3 = NULL;
           __pyx_t_18 = 0;
@@ -4357,7 +4277,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_4)) {
             PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_19, __pyx_t_1};
-            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
@@ -4367,7 +4287,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
             PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_19, __pyx_t_1};
-            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_18, 2+__pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
@@ -4375,7 +4295,7 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
           } else
           #endif
           {
-            __pyx_t_17 = PyTuple_New(2+__pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 123, __pyx_L1_error)
+            __pyx_t_17 = PyTuple_New(2+__pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 125, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_17);
             if (__pyx_t_3) {
               __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -4386,34 +4306,34 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
             PyTuple_SET_ITEM(__pyx_t_17, 1+__pyx_t_18, __pyx_t_1);
             __pyx_t_19 = 0;
             __pyx_t_1 = 0;
-            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_17, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_17, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
           }
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          if (__Pyx_PrintOne(0, __pyx_t_2) < 0) __PYX_ERR(0, 123, __pyx_L1_error)
+          if (__Pyx_PrintOne(0, __pyx_t_2) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-          /* "PyImageAugmentation.pyx":124
+          /* "PyImageAugmentation.pyx":126
  *                     else:
  *                         print("[Info]: false number of rows {} and columns {}".format(img.rows, img.cols))
  *                         raise AssertionError()             # <<<<<<<<<<<<<<
- *     @boundscheck(True)
- *     @wraparound(True)
+ *     @boundscheck(False)
+ *     @wraparound(False)
  */
-          __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_builtin_AssertionError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_builtin_AssertionError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_Raise(__pyx_t_2, 0, 0, 0);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-          __PYX_ERR(0, 124, __pyx_L1_error)
+          __PYX_ERR(0, 126, __pyx_L1_error)
         }
         __pyx_L9:;
       }
     }
   }
 
-  /* "PyImageAugmentation.pyx":99
- *     @wraparound(True)
+  /* "PyImageAugmentation.pyx":101
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline void PyAugmentedImage(self, vector[Mat]images, uchar[:,:,:,:,:]&original):             # <<<<<<<<<<<<<<
  *         cdef:
@@ -4436,8 +4356,8 @@ static CYTHON_INLINE void __pyx_f_20augmentation_manager_20PyImageDataGenerator_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "PyImageAugmentation.pyx":128
- *     @wraparound(True)
+/* "PyImageAugmentation.pyx":130
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline vector[int] setLimits(self, int end, int steps):             # <<<<<<<<<<<<<<
  *         cdef:
@@ -4460,7 +4380,7 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("setLimits", 0);
 
-  /* "PyImageAugmentation.pyx":130
+  /* "PyImageAugmentation.pyx":132
  *     cdef inline vector[int] setLimits(self, int end, int steps):
  *         cdef:
  *             int i =0             # <<<<<<<<<<<<<<
@@ -4469,18 +4389,18 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
  */
   __pyx_v_i = 0;
 
-  /* "PyImageAugmentation.pyx":132
+  /* "PyImageAugmentation.pyx":134
  *             int i =0
  *             vector[int] arange
  *         for i in range(0,end, steps):             # <<<<<<<<<<<<<<
  *             arange.push_back(<int>i)
  *             # print("values ->", i)
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_steps); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_steps); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_int_0);
   __Pyx_GIVEREF(__pyx_int_0);
@@ -4491,16 +4411,16 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
   PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_t_2);
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
     __pyx_t_3 = __pyx_t_2; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 134, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -4508,17 +4428,17 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 134, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 134, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -4528,17 +4448,17 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 132, __pyx_L1_error)
+          else __PYX_ERR(0, 134, __pyx_L1_error)
         }
         break;
       }
       __Pyx_GOTREF(__pyx_t_2);
     }
-    __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 134, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_i = __pyx_t_6;
 
-    /* "PyImageAugmentation.pyx":133
+    /* "PyImageAugmentation.pyx":135
  *             vector[int] arange
  *         for i in range(0,end, steps):
  *             arange.push_back(<int>i)             # <<<<<<<<<<<<<<
@@ -4549,10 +4469,10 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
       __pyx_v_arange.push_back(((int)__pyx_v_i));
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 133, __pyx_L1_error)
+      __PYX_ERR(0, 135, __pyx_L1_error)
     }
 
-    /* "PyImageAugmentation.pyx":132
+    /* "PyImageAugmentation.pyx":134
  *             int i =0
  *             vector[int] arange
  *         for i in range(0,end, steps):             # <<<<<<<<<<<<<<
@@ -4562,32 +4482,32 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "PyImageAugmentation.pyx":135
+  /* "PyImageAugmentation.pyx":137
  *             arange.push_back(<int>i)
  *             # print("values ->", i)
  *         arange.push_back(end)             # <<<<<<<<<<<<<<
  *         return arange
- *     @boundscheck(True)
+ *     @boundscheck(False)
  */
   try {
     __pyx_v_arange.push_back(__pyx_v_end);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 135, __pyx_L1_error)
+    __PYX_ERR(0, 137, __pyx_L1_error)
   }
 
-  /* "PyImageAugmentation.pyx":136
+  /* "PyImageAugmentation.pyx":138
  *             # print("values ->", i)
  *         arange.push_back(end)
  *         return arange             # <<<<<<<<<<<<<<
- *     @boundscheck(True)
- *     @wraparound(True)
+ *     @boundscheck(False)
+ *     @wraparound(False)
  */
   __pyx_r = __pyx_v_arange;
   goto __pyx_L0;
 
-  /* "PyImageAugmentation.pyx":128
- *     @wraparound(True)
+  /* "PyImageAugmentation.pyx":130
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline vector[int] setLimits(self, int end, int steps):             # <<<<<<<<<<<<<<
  *         cdef:
@@ -4606,8 +4526,8 @@ static CYTHON_INLINE std::vector<int>  __pyx_f_20augmentation_manager_20PyImageD
   return __pyx_r;
 }
 
-/* "PyImageAugmentation.pyx":140
- *     @wraparound(True)
+/* "PyImageAugmentation.pyx":142
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:             # <<<<<<<<<<<<<<
  *         cdef int value
@@ -4631,7 +4551,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
   __Pyx_PyGILState_Release(__pyx_gilstate_save);
   #endif
 
-  /* "PyImageAugmentation.pyx":141
+  /* "PyImageAugmentation.pyx":143
  *     @cdivision(True)
  *     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:
  *         cdef int value             # <<<<<<<<<<<<<<
@@ -4640,7 +4560,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
  */
   /*try:*/ {
 
-    /* "PyImageAugmentation.pyx":142
+    /* "PyImageAugmentation.pyx":144
  *     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:
  *         cdef int value
  *         if(limits.size()>0):             # <<<<<<<<<<<<<<
@@ -4650,7 +4570,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
     __pyx_t_1 = ((__pyx_v_limits.size() > 0) != 0);
     if (__pyx_t_1) {
 
-      /* "PyImageAugmentation.pyx":143
+      /* "PyImageAugmentation.pyx":145
  *         cdef int value
  *         if(limits.size()>0):
  *             value = limits[0]             # <<<<<<<<<<<<<<
@@ -4659,7 +4579,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
  */
       __pyx_v_value = (__pyx_v_limits[0]);
 
-      /* "PyImageAugmentation.pyx":145
+      /* "PyImageAugmentation.pyx":147
  *             value = limits[0]
  *             #print("values compared-> ", value , index)
  *             if(index==value):             # <<<<<<<<<<<<<<
@@ -4669,7 +4589,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
       __pyx_t_1 = ((__pyx_v_index == __pyx_v_value) != 0);
       if (__pyx_t_1) {
 
-        /* "PyImageAugmentation.pyx":146
+        /* "PyImageAugmentation.pyx":148
  *             #print("values compared-> ", value , index)
  *             if(index==value):
  *                 return True             # <<<<<<<<<<<<<<
@@ -4679,7 +4599,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
         __pyx_r = 1;
         goto __pyx_L3_return;
 
-        /* "PyImageAugmentation.pyx":145
+        /* "PyImageAugmentation.pyx":147
  *             value = limits[0]
  *             #print("values compared-> ", value , index)
  *             if(index==value):             # <<<<<<<<<<<<<<
@@ -4688,7 +4608,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
  */
       }
 
-      /* "PyImageAugmentation.pyx":148
+      /* "PyImageAugmentation.pyx":150
  *                 return True
  *             else:
  *                 return False             # <<<<<<<<<<<<<<
@@ -4700,7 +4620,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
         goto __pyx_L3_return;
       }
 
-      /* "PyImageAugmentation.pyx":142
+      /* "PyImageAugmentation.pyx":144
  *     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:
  *         cdef int value
  *         if(limits.size()>0):             # <<<<<<<<<<<<<<
@@ -4709,7 +4629,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
  */
     }
 
-    /* "PyImageAugmentation.pyx":150
+    /* "PyImageAugmentation.pyx":152
  *                 return False
  *         else:
  *             raise AssertionError()             # <<<<<<<<<<<<<<
@@ -4722,11 +4642,11 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
           PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           #endif
           /*try:*/ {
-            __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_builtin_AssertionError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 150, __pyx_L9_error)
+            __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_builtin_AssertionError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L9_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_Raise(__pyx_t_2, 0, 0, 0);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-            __PYX_ERR(0, 150, __pyx_L9_error)
+            __PYX_ERR(0, 152, __pyx_L9_error)
           }
           /*finally:*/ {
             __pyx_L9_error: {
@@ -4740,7 +4660,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
     }
   }
 
-  /* "PyImageAugmentation.pyx":141
+  /* "PyImageAugmentation.pyx":143
  *     @cdivision(True)
  *     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:
  *         cdef int value             # <<<<<<<<<<<<<<
@@ -4762,8 +4682,8 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
     }
   }
 
-  /* "PyImageAugmentation.pyx":140
- *     @wraparound(True)
+  /* "PyImageAugmentation.pyx":142
+ *     @wraparound(False)
  *     @cdivision(True)
  *     cdef inline bint compareInts(self, int index, vector[int]&limits) nogil:             # <<<<<<<<<<<<<<
  *         cdef int value
@@ -4784,7 +4704,7 @@ static CYTHON_INLINE int __pyx_f_20augmentation_manager_20PyImageDataGenerator_c
   return __pyx_r;
 }
 
-/* "PyImageAugmentation.pyx":151
+/* "PyImageAugmentation.pyx":153
  *         else:
  *             raise AssertionError()
  *     def getAugmentedImages(self):             # <<<<<<<<<<<<<<
@@ -4816,29 +4736,29 @@ static PyObject *__pyx_pf_20augmentation_manager_20PyImageDataGenerator_2getAugm
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("getAugmentedImages", 0);
 
-  /* "PyImageAugmentation.pyx":152
+  /* "PyImageAugmentation.pyx":154
  *             raise AssertionError()
  *     def getAugmentedImages(self):
  *         return asarray(self.final_images,dtype=float32)             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_asarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (unlikely(!__pyx_v_self->final_images.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 152, __pyx_L1_error)}
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->final_images, 5, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_20augmentation_manager_uchar, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_20augmentation_manager_uchar, 0);; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
+  if (unlikely(!__pyx_v_self->final_images.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 154, __pyx_L1_error)}
+  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_self->final_images, 5, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_20augmentation_manager_uchar, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_20augmentation_manager_uchar, 0);; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_float32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_float32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 152, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -4847,7 +4767,7 @@ static PyObject *__pyx_pf_20augmentation_manager_20PyImageDataGenerator_2getAugm
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "PyImageAugmentation.pyx":151
+  /* "PyImageAugmentation.pyx":153
  *         else:
  *             raise AssertionError()
  *     def getAugmentedImages(self):             # <<<<<<<<<<<<<<
@@ -20023,8 +19943,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 35, __pyx_L1_error)
-  __pyx_builtin_AssertionError = __Pyx_GetBuiltinName(__pyx_n_s_AssertionError); if (!__pyx_builtin_AssertionError) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_builtin_AssertionError = __Pyx_GetBuiltinName(__pyx_n_s_AssertionError); if (!__pyx_builtin_AssertionError) __PYX_ERR(0, 120, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(2, 945, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 133, __pyx_L1_error)
@@ -20347,11 +20267,11 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 }
 
 static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
-  if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 2, __pyx_L1_error);
-  __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __pyx_int_184977713 = PyInt_FromLong(184977713L); if (unlikely(!__pyx_int_184977713)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __pyx_int_neg_1 = PyInt_FromLong(-1); if (unlikely(!__pyx_int_neg_1)) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_184977713 = PyInt_FromLong(184977713L); if (unlikely(!__pyx_int_184977713)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_neg_1 = PyInt_FromLong(-1); if (unlikely(!__pyx_int_neg_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -20675,30 +20595,30 @@ if (!__Pyx_RefNanny) {
 }
 #endif
   __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_augmentation_manager(void)", 0);
-  if (__Pyx_check_binary_version() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_check_binary_version() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
   #endif
-  __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) __PYX_ERR(0, 2, __pyx_L1_error)
-  __pyx_empty_unicode = PyUnicode_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_unicode)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_empty_unicode = PyUnicode_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_unicode)) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pyx_CyFunction_USED
-  if (__pyx_CyFunction_init() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__pyx_CyFunction_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
   #ifdef __Pyx_FusedFunction_USED
-  if (__pyx_FusedFunction_init() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__pyx_FusedFunction_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
   #ifdef __Pyx_Coroutine_USED
-  if (__pyx_Coroutine_init() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__pyx_Coroutine_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
   #ifdef __Pyx_Generator_USED
-  if (__pyx_Generator_init() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__pyx_Generator_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
   #ifdef __Pyx_AsyncGen_USED
-  if (__pyx_AsyncGen_init() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__pyx_AsyncGen_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
   #ifdef __Pyx_StopAsyncIteration_USED
-  if (__pyx_StopAsyncIteration_init() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__pyx_StopAsyncIteration_init() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
   /*--- Library function declarations ---*/
   /*--- Threads initialization code ---*/
@@ -20715,46 +20635,46 @@ if (!__Pyx_RefNanny) {
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
-  if (unlikely(!__pyx_m)) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (unlikely(!__pyx_m)) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  __pyx_d = PyModule_GetDict(__pyx_m); if (unlikely(!__pyx_d)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_d = PyModule_GetDict(__pyx_m); if (unlikely(!__pyx_d)) __PYX_ERR(0, 1, __pyx_L1_error)
   Py_INCREF(__pyx_d);
-  __pyx_b = PyImport_AddModule(__Pyx_BUILTIN_MODULE_NAME); if (unlikely(!__pyx_b)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_b = PyImport_AddModule(__Pyx_BUILTIN_MODULE_NAME); if (unlikely(!__pyx_b)) __PYX_ERR(0, 1, __pyx_L1_error)
   Py_INCREF(__pyx_b);
-  __pyx_cython_runtime = PyImport_AddModule((char *) "cython_runtime"); if (unlikely(!__pyx_cython_runtime)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_cython_runtime = PyImport_AddModule((char *) "cython_runtime"); if (unlikely(!__pyx_cython_runtime)) __PYX_ERR(0, 1, __pyx_L1_error)
   Py_INCREF(__pyx_cython_runtime);
-  if (PyObject_SetAttrString(__pyx_m, "__builtins__", __pyx_b) < 0) __PYX_ERR(0, 2, __pyx_L1_error);
+  if (PyObject_SetAttrString(__pyx_m, "__builtins__", __pyx_b) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   /*--- Initialize various global constants etc. ---*/
-  if (__Pyx_InitGlobals() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_InitGlobals() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
-  if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
   if (__pyx_module_is_main_augmentation_manager) {
-    if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+    if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
-    PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 2, __pyx_L1_error)
+    PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
     if (!PyDict_GetItemString(modules, "augmentation_manager")) {
-      if (unlikely(PyDict_SetItemString(modules, "augmentation_manager", __pyx_m) < 0)) __PYX_ERR(0, 2, __pyx_L1_error)
+      if (unlikely(PyDict_SetItemString(modules, "augmentation_manager", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
   /*--- Builtin init code ---*/
-  if (__Pyx_InitCachedBuiltins() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_InitCachedBuiltins() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   /*--- Constants init code ---*/
-  if (__Pyx_InitCachedConstants() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_InitCachedConstants() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   /*--- Global type/function init code ---*/
   (void)__Pyx_modinit_global_init_code();
   (void)__Pyx_modinit_variable_export_code();
   (void)__Pyx_modinit_function_export_code();
-  if (unlikely(__Pyx_modinit_type_init_code() < 0)) __PYX_ERR(0, 2, __pyx_L1_error)
-  if (unlikely(__Pyx_modinit_type_import_code() < 0)) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (unlikely(__Pyx_modinit_type_init_code() < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (unlikely(__Pyx_modinit_type_import_code() < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
   (void)__Pyx_modinit_variable_import_code();
   (void)__Pyx_modinit_function_import_code();
   /*--- Execution code ---*/
   #if defined(__Pyx_Generator_USED) || defined(__Pyx_Coroutine_USED)
-  if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
   /* "PyImageAugmentation.pyx":10
@@ -20825,15 +20745,14 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_3 = __pyx_f_5numpy_import_array(); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 13, __pyx_L1_error)
 
-  /* "PyImageAugmentation.pyx":2
- * 
- * from libs.PyImageAugmentation cimport *             # <<<<<<<<<<<<<<
+  /* "PyImageAugmentation.pyx":1
+ * #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             # <<<<<<<<<<<<<<
+ * from libs.PyImageAugmentation cimport *
  * from cython cimport boundscheck, wraparound, cdivision
- * from libcpp.vector cimport vector
  */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "View.MemoryView":209
@@ -22169,12 +22088,6 @@ static PyObject *__Pyx_PyObject_GetItem(PyObject *obj, PyObject* key) {
     return __Pyx_PyObject_GetIndex(obj, key);
 }
 #endif
-
-/* BufferIndexError */
-  static void __Pyx_RaiseBufferIndexError(int axis) {
-  PyErr_Format(PyExc_IndexError,
-     "Out of bounds on buffer access (axis %d)", axis);
-}
 
 /* PyFunctionFastCall */
   #if CYTHON_FAST_PYCALL

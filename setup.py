@@ -12,7 +12,7 @@ import glob
 lib_folder = os.path.join("/usr", 'lib', "x86_64-linux-gnu")
 #lib_folder = list(var.values()) #os.path.join(sys.prefix, "lib")
 # Find opencv libraries in lib_folder
-
+print("LIB FOLDER -> ", lib_folder)
 cvlibs = list()
 for file in glob.glob(os.path.join(lib_folder, 'libopencv_*')):
     cvlibs.append(file.split('.')[0])

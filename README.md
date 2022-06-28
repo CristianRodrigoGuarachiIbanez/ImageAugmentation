@@ -1,7 +1,7 @@
 
 
-
-# PyImageAugmentation 
+# PyImageAugmentation [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE) [![Python 3.6+](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-360/)
+![C++](https://img.shields.io/badge/C++-Solutions-red.svg?style=flat&logo=c++) 
 
 This python implementation helps you with augmenting images for machine learning projects. 
 It converts a set of input images into a new, much larger set of slightly altered images based on standard augmentation techniques.
@@ -34,7 +34,7 @@ It converts a set of input images into a new, much larger set of slightly altere
 
 ## Setup
 
-This implementation supports python 3.4+.
+This implementation supports python 3.6+.
 
 To use it, you should clone the repository and place it on your local directory.
 Now, go into the folder
